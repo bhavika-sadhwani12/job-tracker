@@ -1,23 +1,3 @@
-// function JobList({ jobs, onDelete }) {
-//     if (jobs.length === 0) {
-//       return <p>No applications yet. Add one above!</p>
-//     }
-  
-//     return (
-//       <div>
-//         {jobs.map(job => (
-//           <div key={job.id}>
-//             <p>{job.company} — {job.role}</p>
-//             <p>{job.date} | {job.status}</p>
-//             <button onClick={() => onDelete(job.id)}>Delete</button>
-//           </div>
-//         ))}
-//       </div>
-//     )
-//   }
-  
-// export default JobList
-
 function JobList({ jobs, onDelete }) {
     if (jobs.length === 0) {
       return <p>No applications yet. Add one above!</p>
