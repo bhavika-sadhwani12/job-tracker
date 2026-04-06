@@ -1,8 +1,37 @@
-# React + Vite
+# Job Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-featured job application tracker built with React. Track your job search from application to offer.
 
-Currently, two official plugins are available:
+🔗 **Live Demo**: [job-tracker-bhavika.vercel.app](https://job-tracker-liard-omega.vercel.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
+
+- Add and delete job applications
+- Kanban board view with drag and drop
+- Filter by status and search by company
+- Analytics chart showing application breakdown
+- Data persists via localStorage
+
+## Tech Stack
+
+- React (Vite)
+- Tailwind CSS
+- Recharts
+- HTML5 Drag and Drop API
+
+## What I learned
+
+- React hooks — useState, useEffect
+- Controlled inputs and form handling
+- Derived state and array methods (filter, map)
+- localStorage for data persistence
+- Drag and drop without a library
+- Tailwind CSS utility-first styling
+- Component composition and props
+
+## Run locally
+
+git clone https://github.com/bhavika-sadhwani12/job-tracker.git
+cd job-tracker
+npm install
+npm run dev
