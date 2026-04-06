@@ -28,6 +28,12 @@ function App() {
     setJobs(jobs.filter(job => job.id !== id))
   }
 
+  function updateJobStatus(id, newStatus) {
+    setJobs(jobs.map(job => 
+      job.id === id ? { ...job, status: newStatus } : job
+    ))
+  }
+
   const totalJobs = jobs.length
   const applied = jobs.filter(job => job.status === 'Applied').length
   const interviews = jobs.filter(job => job.status === 'Interview').length
@@ -86,7 +92,7 @@ function App() {
       {view === 'list' ? (
         <JobList jobs={filteredJobs} onDelete={deleteJob} />
       ) : (
-        <KanbanBoard jobs={filteredJobs} onDelete={deleteJob} />
+        <KanbanBoard jobs={filteredJobs} onDelete={deleteJob} onUpdateStatus={updateJobStatus} />
       )}
     </div>
   )
