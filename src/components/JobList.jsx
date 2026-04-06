@@ -1,6 +1,11 @@
 function JobList({ jobs, onDelete }) {
     if (jobs.length === 0) {
-      return <p>No applications yet. Add one above!</p>
+      return (
+        <div className="text-center py-16 text-gray-300">
+          <p className="text-4xl mb-3">📋</p>
+          <p className="text-sm">No applications yet. Add one above!</p>
+        </div>
+      )
     }
   
     function getBadgeStyle(status) {
@@ -11,19 +16,24 @@ function JobList({ jobs, onDelete }) {
     }
   
     return (
-      <div>
+      <div className="space-y-2">
         {jobs.map(job => (
-          <div key={job.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px', border: '1px solid #eee', borderRadius: '8px', marginBottom: '8px' }}>
-            <div>
-              <p style={{ fontWeight: '500', margin: 0 }}>{job.company}</p>
-              <p style={{ fontSize: '13px', color: '#888', margin: 0 }}>{job.role}</p>
+          <div key={job.id} className="bg-white rounded-xl px-5 py-4 border border-gray-100 shadow-sm flex justify-between items-center hover:shadow-md transition-shadow">
+            <div className="flex items-center gap-4">
+              <div className="w-9 h-9 rounded-lg bg-gray-100 flex items-center justify-center text-xs font-semibold text-gray-500">
+                {job.company.slice(0, 2).toUpperCase()}
+              </div>
+              <div>
+                <p className="font-medium text-gray-900 text-sm">{job.company}</p>
+                <p className="text-xs text-gray-400 mt-0.5">{job.role}</p>
+              </div>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <span style={{ fontSize: '12px', color: '#aaa' }}>{job.date}</span>
-              <span style={{ fontSize: '12px', fontWeight: '500', padding: '3px 10px', borderRadius: '99px', ...getBadgeStyle(job.status) }}>
+            <div className="flex items-center gap-4">
+              <span className="text-xs text-gray-300">{job.date}</span>
+              <span style={{ fontSize: '11px', fontWeight: '500', padding: '3px 10px', borderRadius: '99px', ...getBadgeStyle(job.status) }}>
                 {job.status}
               </span>
-              <button onClick={() => onDelete(job.id)}>✕</button>
+              <button className="text-gray-200 hover:text-red-400 transition-colors text-sm" onClick={() => onDelete(job.id)}>✕</button>
             </div>
           </div>
         ))}

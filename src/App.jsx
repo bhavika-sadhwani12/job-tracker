@@ -30,7 +30,7 @@ function App() {
   }
 
   function updateJobStatus(id, newStatus) {
-    setJobs(jobs.map(job => 
+    setJobs(jobs.map(job =>
       job.id === id ? { ...job, status: newStatus } : job
     ))
   }
@@ -45,58 +45,72 @@ function App() {
     .filter(job => filterStatus === 'All' ? true : job.status === filterStatus)
 
   return (
-    <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h1>Job Tracker</h1>
-        <button onClick={() => setView(view === 'list' ? 'kanban' : 'list')}>
-          {view === 'list' ? 'Switch to Kanban' : 'Switch to List'}
-        </button>
+    <div className="bg-gray-50 min-h-screen">
+      <div className="max-w-5xl mx-auto px-6 py-8">
+
+        <div className="flex justify-between items-center mb-8">
+          <div>
+            <h1 className="text-2xl font-semibold text-gray-900">Job Tracker</h1>
+            <p className="text-sm text-gray-400 mt-0.5">Track your applications in one place</p>
+          </div>
+          <button
+            onClick={() => setView(view === 'list' ? 'kanban' : 'list')}
+            className="text-sm px-4 py-2 rounded-lg border border-gray-200 text-gray-500 hover:bg-white hover:shadow-sm transition-all"
+          >
+            {view === 'list' ? '⊞ Kanban' : '☰ List'}
+          </button>
+        </div>
+
+        <div className="grid grid-cols-4 gap-4 mb-6">
+          {[
+            { label: 'Total', value: totalJobs, color: 'text-gray-900' },
+            { label: 'Applied', value: applied, color: 'text-blue-600' },
+            { label: 'Interviews', value: interviews, color: 'text-amber-600' },
+            { label: 'Offers', value: offers, color: 'text-green-600' },
+          ].map(stat => (
+            <div key={stat.label} className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
+              <p className="text-xs text-gray-400 mb-1">{stat.label}</p>
+              <p className={`text-2xl font-semibold ${stat.color}`}>{stat.value}</p>
+            </div>
+          ))}
+        </div>
+
+        <Analytics jobs={jobs} />
+
+        <JobForm onAdd={addJob} />
+
+        <div className="flex justify-between items-center mb-4">
+          <div className="flex gap-2">
+            {['All', 'Applied', 'Interview', 'Offer', 'Rejected'].map(status => (
+              <button
+                key={status}
+                onClick={() => setFilterStatus(status)}
+                className={`text-xs px-3 py-1.5 rounded-full border transition-all ${
+                  filterStatus === status
+                    ? 'bg-gray-900 text-white border-gray-900'
+                    : 'bg-white text-gray-500 border-gray-200 hover:border-gray-300'
+                }`}
+              >
+                {status}
+              </button>
+            ))}
+          </div>
+          <input
+            className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 w-48"
+            type="text"
+            placeholder="Search company..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
+
+        {view === 'list' ? (
+          <JobList jobs={filteredJobs} onDelete={deleteJob} />
+        ) : (
+          <KanbanBoard jobs={filteredJobs} onDelete={deleteJob} onUpdateStatus={updateJobStatus} />
+        )}
+
       </div>
-
-      <div style={{ display: 'flex', gap: '16px', margin: '16px 0' }}>
-        <div style={{ background: '#f5f5f5', padding: '12px 20px', borderRadius: '8px' }}>
-          <p style={{ fontSize: '12px', color: '#888', margin: 0 }}>Total</p>
-          <p style={{ fontSize: '24px', fontWeight: '500', margin: 0 }}>{totalJobs}</p>
-        </div>
-        <div style={{ background: '#f5f5f5', padding: '12px 20px', borderRadius: '8px' }}>
-          <p style={{ fontSize: '12px', color: '#888', margin: 0 }}>Applied</p>
-          <p style={{ fontSize: '24px', fontWeight: '500', margin: 0 }}>{applied}</p>
-        </div>
-        <div style={{ background: '#f5f5f5', padding: '12px 20px', borderRadius: '8px' }}>
-          <p style={{ fontSize: '12px', color: '#888', margin: 0 }}>Interviews</p>
-          <p style={{ fontSize: '24px', fontWeight: '500', margin: 0 }}>{interviews}</p>
-        </div>
-        <div style={{ background: '#f5f5f5', padding: '12px 20px', borderRadius: '8px' }}>
-          <p style={{ fontSize: '12px', color: '#888', margin: 0 }}>Offers</p>
-          <p style={{ fontSize: '24px', fontWeight: '500', margin: 0 }}>{offers}</p>
-        </div>
-      </div>
-
-      <Analytics jobs={jobs} />
-      
-      <JobForm onAdd={addJob} />
-
-      <div style={{ display: 'flex', gap: '10px', margin: '16px 0' }}>
-        <input
-          type="text"
-          placeholder="Search by company..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)}>
-          <option>All</option>
-          <option>Applied</option>
-          <option>Interview</option>
-          <option>Offer</option>
-          <option>Rejected</option>
-        </select>
-      </div>
-
-      {view === 'list' ? (
-        <JobList jobs={filteredJobs} onDelete={deleteJob} />
-      ) : (
-        <KanbanBoard jobs={filteredJobs} onDelete={deleteJob} onUpdateStatus={updateJobStatus} />
-      )}
     </div>
   )
 }
