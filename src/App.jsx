@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import JobForm from './components/JobForm'
 import JobList from './components/JobList'
 import KanbanBoard from './components/KanbanBoard'
+import Analytics from './components/Analytics'
 
 function App() {
   const [jobs, setJobs] = useState([])
@@ -71,6 +72,8 @@ function App() {
         </div>
       </div>
 
+      <Analytics jobs={jobs} />
+      
       <JobForm onAdd={addJob} />
 
       <div style={{ display: 'flex', gap: '10px', margin: '16px 0' }}>
